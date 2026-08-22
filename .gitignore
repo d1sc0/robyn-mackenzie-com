@@ -12,3 +12,4 @@ node_modules/
 # Mac OS files
 .DS_Store
 Thumbs.db
+firebase-key.json
