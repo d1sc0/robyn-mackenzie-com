@@ -7,7 +7,7 @@ client: Self-Initiated
 industry: Uni Project
 year: '2025'
 role: Campaign / Service
-featureImage: /images/robyn-portrait.png
+featureImage: /images/Tally_Billboard.png
 description: A speculative project that reimagines how we measure political success in the UK, measuring what matters to people beyond GDP.
 challenge: I wanted to explore how complex government data and policy outcomes could be made more understandable, emotional, and accessible. Time was a challenge, as I was juggling multiple live briefs alongside this solo project. I also had to push myself visually, as building a clear identity system from scratch isn’t something I usually enjoy-  but I found myself connecting with the outcome as it developed.
 result: The final project includes a campaign identity, posters, sticker packs, speculative government interventions, and a microsite mockup. The visual language, lino-printed icons and tone of voice all work together to create something that feels bold, honest, and people-first. Tally helped me define my interest in service design and civic communication, and showed me how design can make abstract systems feel more human.
