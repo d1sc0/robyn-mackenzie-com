@@ -1,6 +1,6 @@
 ---
 title: Siloed Systems & Fragmented Care
-pubDate: ''
+pubDate: 2026-08-22T22:07:00
 featured: true
 order: 1
 client: Self-Initiated
