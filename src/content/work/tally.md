@@ -35,6 +35,8 @@ tags:
 
 To give the campaign a tangible, grounded warmth, each icon category was hand-carved in linoleum and hand-printed before digital vectorisation. This human imperfection contrasts with the sterile aesthetics often associated with government white papers and fiscal reports.
 
+
+
 ```markdown
 * Touchpoint 1: The "People's Budget" Summary Sheet
 * Touchpoint 2: Street-level voting prompts and ballot sticker packs
