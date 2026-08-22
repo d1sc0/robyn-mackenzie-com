@@ -31,10 +31,6 @@
     {
       "label": "RSS",
       "url": "/rss.xml"
-    },
-    {
-      "label": "Admin",
-      "url": "/admin"
     }
   ]
 }
