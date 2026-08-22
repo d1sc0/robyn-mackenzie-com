@@ -32,7 +32,7 @@ let currentIndex = 0;
 galleries.forEach(section => {
   (section.images || []).forEach((img: any) => {
     allImages.push({
-      src: img.src.replace('../../', '/src/'),
+      src: img.src,
       alt: img.alt || section.title || 'Gallery image',
       caption: img.caption || '',
       sectionTitle: section.title || '',

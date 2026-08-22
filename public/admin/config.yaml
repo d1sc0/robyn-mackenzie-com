@@ -3,8 +3,8 @@ backend:
   branch: main
   repo: d1sc0/robyn-mackenzie-com
 
-media_folder: 'src/assets/uploaded_images'
-public_folder: '/src/assets/uploaded_images'
+media_folder: 'public/images'
+public_folder: '/images'
 
 collections:
   - name: 'posts'

@@ -8,7 +8,7 @@ year: "2024"
 role: "Brand & Experience"
 featured: true
 order: 3
-featureImage: "/src/assets/images/work-resonance.png"
+featureImage: "/images/work-resonance.png"
 tags: ["Brand Identity", "Experience Design", "Music", "Accessibility"]
 challenge: "Bridging the perceptual gap between traditional concert halls and modern community culture, creating accessible touchpoints for young music lovers."
 result: "A multi-touchpoint brand system spanning venue signage, physical programs, digital discovery maps, and inclusive workshop toolkits."

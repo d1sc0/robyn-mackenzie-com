@@ -8,7 +8,7 @@ year: "2025"
 role: "Design Research"
 featured: true
 order: 4
-featureImage: "/src/assets/images/work-dissertation.png"
+featureImage: "/images/work-dissertation.png"
 tags: ["Design Research", "Public Sector", "Editorial", "Care"]
 challenge: "Synthesizing interviews with public sector practitioners, NHS frontline teams, and civic tech advocates into an actionable editorial handbook."
 result: "A published 120-page critical monograph and accompanying workshop canvas used for participatory system mapping."
