@@ -8,11 +8,32 @@ public_folder: '/images'
 
 collections:
   - name: 'posts'
-    label: 'Blog Posts'
+    label: 'Posts (Markdown)'
     folder: 'src/content/posts'
     create: true
     slug: '{{slug}}'
     extension: 'md'
+    format: 'yaml-frontmatter'
+    media_folder_relative: true
+    sortable_fields: ['title', 'pubDate']
+    default_sort:
+      - { field: pubDate, direction: descending }
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Date', name: 'pubDate', widget: 'datetime' }
+      - { label: 'Description', name: 'description', widget: 'text' }
+      - { label: 'Draft', name: 'draft', widget: 'boolean', default: false, required: false }
+      - { label: 'Category', name: 'category', widget: 'string', default: 'Thoughts', required: false }
+      - { label: 'Feature Image', name: 'featureImage', widget: 'image', required: false }
+      - { label: 'Tags', name: 'tags', widget: 'list', required: false }
+      - { label: 'Body', name: 'body', widget: 'markdown' }
+
+  - name: 'mdx_posts'
+    label: 'Posts (MDX)'
+    folder: 'src/content/posts'
+    create: true
+    slug: '{{slug}}'
+    extension: 'mdx'
     format: 'yaml-frontmatter'
     media_folder_relative: true
     sortable_fields: ['title', 'pubDate']
@@ -60,7 +81,7 @@ collections:
     folder: 'src/content/pages'
     create: true
     slug: '{{slug}}'
-    extension: 'md'
+    extension: 'mdx'
     format: 'yaml-frontmatter'
     media_folder_relative: true
     fields:
