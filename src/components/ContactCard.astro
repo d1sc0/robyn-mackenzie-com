@@ -1,0 +1,164 @@
+---
+interface Props {
+  email?: string;
+  label?: string;
+}
+
+const { email = 'mail@robynmackenzie.com', label = 'Direct Email' } = Astro.props;
+---
+
+<div class="contact-card-component">
+  <div class="contact-card-component__header">
+    <span class="contact-card-component__label">{label}</span>
+  </div>
+
+  <div class="contact-card-component__body">
+    <a href={`mailto:${email}`} class="contact-card-component__email">
+      {email}
+    </a>
+  </div>
+
+  <div class="contact-card-component__footer">
+    <button
+      type="button"
+      class="contact-card-component__copy-btn"
+      data-copy-email={email}
+      aria-label="Copy email address to clipboard"
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="copy-icon">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+      <span class="btn-text">Copy address</span>
+    </button>
+    <a href={`mailto:${email}`} class="contact-card-component__action-btn">
+      <span>Open email app &rarr;</span>
+    </a>
+  </div>
+</div>
+
+<style>
+  .contact-card-component {
+    background: var(--color-page-card);
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    margin: 2rem 0;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .contact-card-component {
+      padding: 2.5rem 2rem;
+    }
+  }
+
+  .contact-card-component__label {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+  }
+
+  .contact-card-component__email {
+    font-family: var(--font-mono);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    background: var(--color-accent-light);
+    border: 1px solid var(--color-accent);
+    word-break: break-all;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+  }
+
+  @media (min-width: 640px) {
+    .contact-card-component__email {
+      font-size: 1.75rem;
+      padding: 0.75rem 1.5rem;
+      word-break: normal;
+    }
+  }
+
+  .contact-card-component__email:hover {
+    transform: translateY(-2px);
+  }
+
+  .contact-card-component__footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+
+  .contact-card-component__copy-btn,
+  .contact-card-component__action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.9rem;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .contact-card-component__copy-btn {
+    background: var(--color-tag-bg);
+    border: 1px solid var(--color-line);
+    color: var(--color-text);
+  }
+
+  .contact-card-component__copy-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .contact-card-component__action-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--color-text-muted);
+  }
+
+  .contact-card-component__action-btn:hover {
+    color: var(--color-accent);
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-copy-email]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const email = btn.getAttribute('data-copy-email');
+      if (!email) return;
+
+      try {
+        await navigator.clipboard.writeText(email);
+        const textSpan = btn.querySelector('.btn-text');
+        if (textSpan) {
+          const original = textSpan.textContent;
+          textSpan.textContent = 'Copied to clipboard!';
+          btn.classList.add('is-copied');
+          setTimeout(() => {
+            textSpan.textContent = original;
+            btn.classList.remove('is-copied');
+          }, 2000);
+        }
+      } catch (e) {
+        console.error('Failed to copy email:', e);
+      }
+    });
+  });
+</script>
