@@ -1,40 +1,16 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import SocialLinks from '../components/SocialLinks.astro';
+import MarkdownPageLayout from '../layouts/MarkdownPageLayout.astro';
+import { getEntry, render } from 'astro:content';
 import '../styles/contact.css';
 
-const trail = [{ label: 'Contact' }];
+const contact = await getEntry('pages', 'contact');
+const { Content } = contact ? await render(contact) : { Content: null };
 ---
 
-<BaseLayout
-  title="Contact"
-  description="Get in touch with Robyn Mackenzie — Designer & User Researcher."
-  trail={trail}
->
-  <div class="contact-hero">
-    <span class="section__label">Get in Touch</span>
-    <h1>Ping me an email :)</h1>
-    <p class="hero__lead">
-      Interested in turning good ideas into great experiences? I’m always happy to chat about service design, digital accessibility, freelance projects, or just talk cookies.
-    </p>
-
-    <div class="contact-card">
-      <p style="font-size: 1.1rem; color: var(--color-text-muted); margin: 0;">
-        Direct Email
-      </p>
-      <a href="mailto:mail@robynmackenzie.com" class="contact-email">
-        mail@robynmackenzie.com &rarr;
-      </a>
-      <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-top: 0.5rem;">
-        Click to open your email client or copy to clipboard
-      </p>
-    </div>
-
-
-
-    <div style="margin-top: 3rem;">
-      <h3>Find me elsewhere</h3>
-      <SocialLinks />
-    </div>
-  </div>
-</BaseLayout>
+{
+  contact && Content ? (
+    <MarkdownPageLayout frontmatter={contact.data}>
+      <Content />
+    </MarkdownPageLayout>
+  ) : null
+}

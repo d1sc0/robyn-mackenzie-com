@@ -1,104 +1,16 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import SocialLinks from '../components/SocialLinks.astro';
+import MarkdownPageLayout from '../layouts/MarkdownPageLayout.astro';
+import { getEntry, render } from 'astro:content';
 import '../styles/about.css';
 
-const skills = [
-  'DESIGN RESEARCH',
-  'SERVICE DESIGN',
-  'STRATEGY',
-  'BRAND IDENTITY',
-  'CONTENT DESIGN',
-  'USER TESTING',
-  'ACCESSIBILITY',
-  'SYSTEMS MAPPING',
-];
-
-const faqs = [
-  {
-    q: 'What kind of work have you done so far?',
-    a: 'Alongside completing my BA Graphic Design degree at Arts University Bournemouth (AUB), I work as a freelance content designer helping organisations make information more accessible, usable, and human. I’ve previously worked within the NHS on digital transformation projects, supporting everything from user research to training design.',
-  },
-  {
-    q: 'What kind of work are you looking for?',
-    a: 'I’m looking for opportunities that stretch across sectors and borders — projects that centre care, drive change, and leave systems better than they were.',
-  },
-  {
-    q: 'What skills do you bring to a team?',
-    a: 'A blend of deep user research, strategic framing, and visual design. I make complex systems understandable through clear artifacts, journey maps, and accessible content.',
-  },
-  {
-    q: 'Do you take on freelance work?',
-    a: 'Yes! I collaborate with teams on design research, identity systems, workshop facilitation, and digital content design.',
-  },
-];
-
-const trail = [{ label: 'About' }];
+const about = await getEntry('pages', 'about');
+const { Content } = about ? await render(about) : { Content: null };
 ---
 
-<BaseLayout
-  title="About Robyn"
-  description="About Robyn Mackenzie — Designer and user researcher based in Dorset, UK."
-  trail={trail}
->
-  <div style="margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-line);">
-    <span class="section__label">About Me</span>
-    <h1>Robyn Mackenzie</h1>
-  </div>
-
-  <div class="about-hero">
-    <div class="about-bio">
-      <p class="hero__lead">
-        When I’m not designing, you might find me rollerskating, volunteering at parkrun, or cooking some very nearly underbaked cookies. I’m Dorset born and bred, but my work &mdash; and curiosity &mdash; reach far beyond.
-      </p>
-
-      <p>
-        Alongside finishing my BA Graphic Design degree at <strong>Arts University Bournemouth (AUB)</strong>, I work as a freelance content designer &mdash; helping organisations make information more accessible, usable, and human.
-      </p>
-
-      <p>
-        I’ve previously worked within the <strong>NHS</strong> on digital transformation projects, supporting everything from user testing and qualitative interviews to training material design.
-      </p>
-
-      <p>
-        Now, I’m looking for opportunities that stretch across public, civic, and cultural sectors &mdash; projects that centre care, drive progressive change, and leave things better than they were :)
-      </p>
-
-      <div style="margin-top: 2rem;">
-        <SocialLinks />
-      </div>
-    </div>
-
-    <div class="about-portrait-wrap">
-      <img
-        src="/images/robyn-portrait.png"
-        alt="Robyn Mackenzie"
-        class="about-portrait"
-        loading="eager"
-      />
-    </div>
-  </div>
-
-  <section style="margin: 3rem 0; padding-top: 2rem; border-top: 1px solid var(--color-line);">
-    <span class="section__label">Core Disciplines</span>
-    <h2>Skills &amp; Capabilities</h2>
-    <div class="skills-grid">
-      {skills.map(skill => (
-        <span class="skill-pill">{skill}</span>
-      ))}
-    </div>
-  </section>
-
-  <section style="margin: 3rem 0; padding-top: 2rem; border-top: 1px solid var(--color-line);">
-    <span class="section__label">FAQs</span>
-    <h2>Frequently Asked Questions</h2>
-    <div class="faq-list">
-      {faqs.map(faq => (
-        <div class="faq-item">
-          <h3 class="faq-question">{faq.q}</h3>
-          <p class="faq-answer">{faq.a}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-</BaseLayout>
+{
+  about && Content ? (
+    <MarkdownPageLayout frontmatter={about.data}>
+      <Content />
+    </MarkdownPageLayout>
+  ) : null
+}
