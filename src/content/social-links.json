@@ -1,0 +1,28 @@
+{
+  "links": [
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/robyn-mackenzie/",
+      "icon": "linkedin",
+      "aria": "Visit Robyn's LinkedIn profile"
+    },
+    {
+      "label": "Instagram",
+      "url": "https://www.instagram.com/",
+      "icon": "instagram",
+      "aria": "Visit Robyn's Instagram profile"
+    },
+    {
+      "label": "Email",
+      "url": "mailto:mail@robynmackenzie.com",
+      "icon": "mail",
+      "aria": "Send an email to Robyn Mackenzie"
+    },
+    {
+      "label": "RSS Feed",
+      "url": "/rss.xml",
+      "icon": "rss",
+      "aria": "Subscribe to RSS feed"
+    }
+  ]
+}

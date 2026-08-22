@@ -1,0 +1,105 @@
+---
+import '../styles/mdx-image-gallery.css';
+import fs from 'node:fs';
+import path from 'node:path';
+import yaml from 'yaml';
+
+interface Props {
+  gallery?: string;
+  heading?: string;
+  images?: { src: string; alt?: string; caption?: string }[];
+}
+
+const { gallery, heading, images: propImages } = Astro.props;
+
+let resolvedImages = propImages || [];
+let resolvedHeading = heading || '';
+
+if (gallery && !propImages) {
+  try {
+    const yamlPath = path.resolve('src/content/galleries.yaml');
+    if (fs.existsSync(yamlPath)) {
+      const raw = fs.readFileSync(yamlPath, 'utf8');
+      const parsed = yaml.parse(raw);
+      const matched = parsed?.galleries?.find((g: any) => g.id === gallery);
+      if (matched) {
+        resolvedImages = matched.images || [];
+        if (!resolvedHeading) {
+          resolvedHeading = matched.title || '';
+        }
+      }
+    }
+  } catch (err) {
+    console.error('Error loading gallery yaml:', err);
+  }
+}
+---
+
+{
+  resolvedImages.length > 0 ? (
+    <section class="mdx-image-gallery" data-mdx-image-gallery>
+      <div class="mdx-image-gallery__head">
+        {resolvedHeading ? (
+          <h4 class="mdx-image-gallery__heading">{resolvedHeading}</h4>
+        ) : <span />}
+        <div class="mdx-image-gallery__controls">
+          <button
+            type="button"
+            class="mdx-image-gallery__button"
+            data-scroll-direction="left"
+            aria-label="Scroll left"
+          >
+            &larr;
+          </button>
+          <button
+            type="button"
+            class="mdx-image-gallery__button"
+            data-scroll-direction="right"
+            aria-label="Scroll right"
+          >
+            &rarr;
+          </button>
+        </div>
+      </div>
+
+      <div class="mdx-image-gallery__viewport-shell">
+        <div class="mdx-image-gallery__viewport" tabindex="0">
+          <ul class="mdx-image-gallery__track">
+            {resolvedImages.map(item => (
+              <li class="mdx-image-gallery__item">
+                <figure class="mdx-image-gallery__figure">
+                  <img
+                    src={item.src}
+                    alt={item.alt || ''}
+                    class="mdx-image-gallery__image"
+                    loading="lazy"
+                  />
+                  {item.caption && (
+                    <figcaption class="mdx-image-gallery__caption">
+                      {item.caption}
+                    </figcaption>
+                  )}
+                </figure>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  ) : null
+}
+
+<script>
+  document.querySelectorAll('[data-mdx-image-gallery]').forEach(root => {
+    const viewport = root.querySelector('.mdx-image-gallery__viewport') as HTMLElement | null;
+    if (!viewport) return;
+
+    root.querySelectorAll('[data-scroll-direction]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const direction = btn.getAttribute('data-scroll-direction') === 'left' ? -1 : 1;
+        const amount = Math.round(viewport.clientWidth * 0.8);
+        viewport.scrollBy({ left: direction * amount, behavior: 'smooth' });
+      });
+    });
+  });
+</script>

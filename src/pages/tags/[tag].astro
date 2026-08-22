@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import WorkCard from '../../components/WorkCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('posts');
+  const allWork = await getCollection('work');
+
+  const allTags = new Set<string>();
+
+  allPosts.forEach(post => {
+    (post.data.tags || []).forEach(t => allTags.add(t));
+  });
+
+  allWork.forEach(work => {
+    (work.data.tags || []).forEach(t => allTags.add(t));
+  });
+
+  return Array.from(allTags).map(tag => {
+    const matchingPosts = allPosts.filter(p => !p.data.draft && p.data.tags?.includes(tag));
+    const matchingWork = allWork.filter(w => w.data.tags?.includes(tag));
+
+    return {
+      params: { tag },
+      props: { tag, posts: matchingPosts, work: matchingWork },
+    };
+  });
+}
+
+const { tag, posts, work } = Astro.props;
+
+const trail = [
+  { label: 'Tags', url: '/tags' },
+  { label: `#${tag}` },
+];
+---
+
+<BaseLayout
+  title={`Topic: #${tag}`}
+  description={`All articles and projects tagged with #${tag}`}
+  trail={trail}
+>
+  <div style="margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-line);">
+    <span class="section__label">Tag Filter</span>
+    <h1>#{tag}</h1>
+    <p class="hero__lead">
+      Found {posts.length + work.length} item{posts.length + work.length === 1 ? '' : 's'} tagged with #{tag}.
+    </p>
+  </div>
+
+  {
+    work.length > 0 && (
+      <section style="margin-bottom: 3rem;">
+        <h2>Projects ({work.length})</h2>
+        <div class="work-grid">
+          {work.map(item => (
+            <WorkCard
+              title={item.data.title}
+              slug={item.id}
+              description={item.data.description}
+              client={item.data.client}
+              year={item.data.year}
+              role={item.data.role}
+              featureImage={item.data.featureImage}
+            />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  {
+    posts.length > 0 && (
+      <section>
+        <h2>Notes &amp; Posts ({posts.length})</h2>
+        <div class="posts-list">
+          {posts.map(post => (
+            <PostCard
+              title={post.data.title}
+              slug={post.id}
+              pubDate={post.data.pubDate}
+              description={post.data.description}
+              tags={post.data.tags}
+              category={post.data.category}
+            />
+          ))}
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

@@ -1,0 +1,40 @@
+{
+  "links": [
+    {
+      "label": "Home",
+      "url": "/"
+    },
+    {
+      "label": "Work",
+      "url": "/work"
+    },
+    {
+      "label": "Blog",
+      "url": "/posts"
+    },
+    {
+      "label": "Gallery",
+      "url": "/gallery"
+    },
+    {
+      "label": "About",
+      "url": "/about"
+    },
+    {
+      "label": "Contact",
+      "url": "/contact"
+    },
+    {
+      "label": "Tags",
+      "url": "/tags"
+    },
+    {
+      "label": "RSS",
+      "url": "/rss.xml"
+    },
+    {
+      "label": "Admin",
+      "url": "/admin"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import '../styles/posts.css';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    pubDate: Date | string;
+    description: string;
+    tags?: string[];
+    category?: string;
+    featureImage?: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+
+const formattedDate = new Date(frontmatter.pubDate).toLocaleDateString('en-GB', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const trail = [
+  { label: 'Blog', url: '/posts' },
+  { label: frontmatter.title },
+];
+---
+
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  ogImage={frontmatter.featureImage}
+  trail={trail}
+  article={{
+    publishedTime: new Date(frontmatter.pubDate).toISOString(),
+    tags: frontmatter.tags,
+  }}
+>
+  <article class="post-layout">
+    <header class="post-layout__header">
+      <div class="post-layout__meta">
+        <time datetime={new Date(frontmatter.pubDate).toISOString()}>
+          {formattedDate}
+        </time>
+        {frontmatter.category && <span>&middot;</span>}
+        {frontmatter.category && (
+          <span class="badge badge--accent">{frontmatter.category}</span>
+        )}
+      </div>
+      <h1>{frontmatter.title}</h1>
+      {
+        frontmatter.tags && frontmatter.tags.length > 0 && (
+          <div class="tags-list">
+            {frontmatter.tags.map((tag: string) => (
+              <a href={`/tags/${tag}`} class="tag-item">
+                #{tag}
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </header>
+
+    {
+      frontmatter.featureImage && (
+        <img
+          src={frontmatter.featureImage}
+          alt={frontmatter.title}
+          class="imageFull"
+          loading="eager"
+        />
+      )
+    }
+
+    <div class="post-layout__content">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

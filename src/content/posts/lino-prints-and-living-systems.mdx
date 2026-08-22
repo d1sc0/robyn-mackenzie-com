@@ -1,0 +1,37 @@
+---
+title: "Lino Prints, Physical Artifacts, and Living Systems"
+pubDate: 2025-01-25
+description: "Why making things with your hands creates deeper empathy when designing digital services and civic interfaces."
+category: "Craft"
+tags: ["Linocut", "Printmaking", "Craft", "Design Research"]
+draft: false
+---
+
+import MdxImageGallery from '../../components/MdxImageGallery.astro';
+
+In an era dominated by Figma components and generative canvas tools, spending hours cutting linoleum blocks with handheld gouges feels delightfully stubborn. But there is a vital lesson in printmaking that directly informs my service design practice: **irreversibility and material respect**.
+
+<MdxImageGallery gallery="highlights" heading="Fieldwork & Print Artifacts" />
+
+When you cut into a lino block, you cannot press `Cmd + Z`. You must accommodate the grain, accept minor slipping of the blade, and incorporate the unexpected into the final impression.
+
+### CSS for Grain and Tactility
+
+When translating physical print warmth to digital design systems, subtle texture can break the sterility of flat CSS:
+
+```css
+/* Subtle organic paper texture simulation */
+.grain-overlay {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 0);
+  background-size: 8px 8px;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+```
+
+> "The goal is never to simulate print for the sake of nostalgia, but to remember that humans are physical beings who experience the world through touch, texture, and rhythm."
+
+### Takeaways for Service Designers
+
+1. **Physical prototypes force simplicity:** If an icon cannot be carved into a 2cm block of linoleum, it is likely too complicated for a busy train station concourse.
+2. **Workshops benefit from tangible tools:** Giving stakeholders physical tokens and handwritten prompts unlocks insights that sticky-note Miro boards simply cannot reach.

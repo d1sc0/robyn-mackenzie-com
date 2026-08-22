@@ -1,0 +1,40 @@
+---
+import '../styles/posts.css';
+
+interface Props {
+  title: string;
+  slug: string;
+  pubDate: Date | string;
+  description: string;
+  tags?: string[];
+  category?: string;
+}
+
+const { title, slug, pubDate, description, tags = [], category } = Astro.props;
+
+const formattedDate = new Date(pubDate).toLocaleDateString('en-GB', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+<a href={`/posts/${slug}`} class="post-entry">
+  <div class="post-entry__header">
+    <time datetime={new Date(pubDate).toISOString()} class="post-entry__date">
+      {formattedDate}
+    </time>
+    {category && <span class="badge badge--accent">{category}</span>}
+  </div>
+  <h3 class="post-entry__title">{title}</h3>
+  <p class="post-entry__description">{description}</p>
+  {
+    tags.length > 0 && (
+      <div class="post-entry__tags">
+        {tags.map((t: string) => (
+          <span class="badge">#{t}</span>
+        ))}
+      </div>
+    )
+  }
+</a>

@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import TagList from '../../components/TagList.astro';
+import { getCollection } from 'astro:content';
+import '../../styles/posts.css';
+
+const allPosts = await getCollection('posts');
+const publishedPosts = allPosts
+  .filter(p => !p.data.draft)
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+
+// Collect all tags with frequency
+const tagCountMap: Record<string, number> = {};
+publishedPosts.forEach(post => {
+  (post.data.tags || []).forEach((tag: string) => {
+    tagCountMap[tag] = (tagCountMap[tag] || 0) + 1;
+  });
+});
+
+const allTags = Object.entries(tagCountMap)
+  .map(([name, count]) => ({ name, count }))
+  .sort((a, b) => b.count - a.count);
+
+const trail = [{ label: 'Blog' }];
+---
+
+<BaseLayout
+  title="Garden & Blog"
+  description="Notes, field thoughts, design research reflections, and writing by Robyn Mackenzie."
+  trail={trail}
+>
+  <div style="margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-line);">
+    <span class="section__label">Digital Garden</span>
+    <h1>Notes &amp; Thoughts</h1>
+    <p class="hero__lead">
+      An open notebook of ongoing thoughts on service design, accessibility, typography, and community building.
+    </p>
+
+    {allTags.length > 0 && (
+      <div style="margin-top: 1.5rem;">
+        <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-text-muted); text-transform: uppercase;">
+          Topics:
+        </span>
+        <TagList tags={allTags} />
+      </div>
+    )}
+  </div>
+
+  <div class="posts-list">
+    {
+      publishedPosts.map(post => (
+        <PostCard
+          title={post.data.title}
+          slug={post.id}
+          pubDate={post.data.pubDate}
+          description={post.data.description}
+          tags={post.data.tags}
+          category={post.data.category}
+        />
+      ))
+    }
+  </div>
+</BaseLayout>

@@ -1,0 +1,89 @@
+/* Posts & Garden Styles */
+
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.post-entry {
+  display: block;
+  padding: 1.5rem;
+  background: var(--color-page-card);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.post-entry:hover {
+  transform: translateX(4px);
+  border-color: var(--color-accent);
+}
+
+.post-entry__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.post-entry__date {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.post-entry__title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.post-entry:hover .post-entry__title {
+  color: var(--color-accent);
+}
+
+.post-entry__description {
+  margin: 0 0 1rem 0;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.post-entry__tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Post detail layout */
+.post-layout__header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.post-layout__meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.post-layout__content {
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.post-layout__content h2 {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-line-subtle);
+}

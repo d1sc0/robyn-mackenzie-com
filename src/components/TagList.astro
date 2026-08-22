@@ -1,0 +1,20 @@
+---
+import '../styles/tags-list.css';
+
+interface Props {
+  tags: { name: string; count?: number }[];
+}
+
+const { tags = [] } = Astro.props;
+---
+
+<div class="tags-list">
+  {
+    tags.map(t => (
+      <a href={`/tags/${t.name}`} class="tag-item">
+        <span>#{t.name}</span>
+        {t.count !== undefined && <span class="tag-count">({t.count})</span>}
+      </a>
+    ))
+  }
+</div>

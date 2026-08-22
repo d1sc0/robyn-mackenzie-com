@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://robynmackenzie.com/sitemap-index.xml

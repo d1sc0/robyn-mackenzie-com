@@ -1,0 +1,29 @@
+{
+  "links": [
+    {
+      "label": "Work",
+      "url": "/work"
+    },
+    {
+      "label": "Blog",
+      "url": "/posts"
+    },
+    {
+      "label": "Gallery",
+      "url": "/gallery"
+    },
+    {
+      "label": "About",
+      "url": "/about"
+    },
+    {
+      "label": "Contact",
+      "url": "/contact"
+    },
+    {
+      "label": "Toggle Dark Mode",
+      "url": "#darkmode",
+      "icon": "moon"
+    }
+  ]
+}

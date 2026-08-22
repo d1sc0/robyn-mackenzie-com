@@ -1,0 +1,24 @@
+---
+import '../styles/footer.css';
+import footerData from '../content/footer-nav.json';
+---
+
+<footer id="footer">
+  <section class="footer">
+    <ul>
+      {
+        Array.isArray(footerData.links) &&
+          footerData.links.map(link => (
+            <li>
+              <a href={link.url}>{link.label}</a>
+            </li>
+          ))
+      }
+    </ul>
+    <div class="footer__bottom">
+      <p class="footer__copyright">
+        &copy; {new Date().getFullYear()} Robyn Mackenzie &middot; Built with Astro &amp; Sveltia CMS
+      </p>
+    </div>
+  </section>
+</footer>

@@ -1,0 +1,41 @@
+---
+title: "Designing for Crisis & Low Cognitive Bandwidth"
+pubDate: 2025-02-18
+description: "When people interact with public health services, they are rarely calm. Here is how we design interfaces that respect human stress responses."
+category: "Service Design"
+tags: ["Accessibility", "Healthcare", "UX Research", "Content Design"]
+featureImage: "/src/assets/images/gallery-3.png"
+draft: false
+---
+
+When someone lands on an emergency triage page or a critical support service, their cognitive bandwidth is severely constricted. Adrenaline narrows focus, stress increases reading errors, and complex multi-column layouts induce immediate cognitive fatigue.
+
+> "Accessibility isn't just about screen reader compliance or high contrast ratios; it's about emotional accessibility when someone is having the worst day of their week."
+
+### Principles for High-Stress Interfaces
+
+Here are four core principles I carry from my work on healthcare transformation projects:
+
+1. **One Question Per Screen:** Never overwhelm users with sprawling multi-fieldset forms when they are anxious.
+2. **Plain English First:** Avoid institutional jargon. If you mean *“tell us about your pain”*, do not write *“describe symptomatic presentation”*.
+3. **Persistent Reassurance:** Clarify that progress is saved and help is on the way.
+4. **Predictable Navigation:** Never trap users behind unpredictable JavaScript modaled drawers.
+
+### Code Snippet: Semantic Alert Patterns
+
+```html
+<!-- Accessible High-Priority Notice -->
+<aside class="notice notice--urgent" role="status" aria-live="polite">
+  <p class="notice__heading">Immediate Assistance Available</p>
+  <p>If you or someone you are with needs urgent care, call <strong>111</strong> directly.</p>
+</aside>
+```
+
+### Usability Checklist for Service Pages
+
+- [x] Clear primary action visible without scrolling
+- [x] Reading age tested at 9–11 years
+- [x] No auto-advancing carousels or flashing motion
+- [x] Tested with users under time pressure and mobile network latency
+
+When we design for the edges of human vulnerability, the experience improves exponentially for everyone.

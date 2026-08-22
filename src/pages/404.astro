@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="404 — Page Not Found"
+  description="The page you were looking for could not be found."
+>
+  <div style="text-align: center; padding: 4rem 1rem;">
+    <span class="section__label">404 Error</span>
+    <h1 style="font-size: 4rem; margin: 0.5rem 0;">Lost in the garden?</h1>
+    <p class="hero__lead" style="margin: 1.5rem auto 2.5rem auto; max-width: 500px;">
+      The note or case study you're looking for might have been pruned, moved, or never planted.
+    </p>
+
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="/" class="btn btn--primary">Return Home &rarr;</a>
+      <a href="/work" class="btn btn--outline">View Work</a>
+      <a href="/posts" class="btn btn--outline">Read Garden Notes</a>
+    </div>
+  </div>
+</BaseLayout>

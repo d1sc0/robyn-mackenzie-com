@@ -1,0 +1,141 @@
+/* Work & Portfolio Styles */
+
+.work-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-page-card);
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.work-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-accent);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.08);
+}
+
+.work-card__image-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: var(--color-tag-bg);
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.work-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.work-card:hover .work-card__image {
+  transform: scale(1.03);
+}
+
+.work-card__content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.work-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.work-card__title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.work-card__description {
+  margin: 0 0 1.25rem 0;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  flex-grow: 1;
+}
+
+.work-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-line-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+/* Single Work Case Study */
+.work-single__header {
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--color-line);
+  padding-bottom: 2rem;
+}
+
+.work-single__meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--color-page-card);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+}
+
+@media (min-width: 768px) {
+  .work-single__meta-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.meta-item__label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.meta-item__value {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.work-section {
+  margin: 2.5rem 0;
+}
+
+.work-section__title {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+  margin-bottom: 0.5rem;
+}
+
+.work-single__cover {
+  width: 100%;
+  border-radius: 12px;
+  margin: 2rem 0;
+  border: 1px solid var(--color-line);
+}

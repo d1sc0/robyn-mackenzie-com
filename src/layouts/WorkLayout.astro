@@ -1,0 +1,127 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import '../styles/work.css';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    client?: string;
+    industry?: string;
+    year?: string;
+    role?: string;
+    featureImage?: string;
+    challenge?: string;
+    result?: string;
+    tags?: string[];
+  };
+}
+
+const { frontmatter } = Astro.props;
+
+const trail = [
+  { label: 'Work', url: '/work' },
+  { label: frontmatter.title },
+];
+---
+
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  ogImage={frontmatter.featureImage}
+  trail={trail}
+>
+  <article class="work-single">
+    <header class="work-single__header">
+      <span class="section__label">Case Study</span>
+      <h1>{frontmatter.title}</h1>
+      <p class="hero__lead">{frontmatter.description}</p>
+
+      <div class="work-single__meta-grid">
+        {
+          frontmatter.industry && (
+            <div class="meta-item">
+              <div class="meta-item__label">Industry</div>
+              <div class="meta-item__value">{frontmatter.industry}</div>
+            </div>
+          )
+        }
+        {
+          frontmatter.client && (
+            <div class="meta-item">
+              <div class="meta-item__label">Client</div>
+              <div class="meta-item__value">{frontmatter.client}</div>
+            </div>
+          )
+        }
+        {
+          frontmatter.year && (
+            <div class="meta-item">
+              <div class="meta-item__label">Year</div>
+              <div class="meta-item__value">{frontmatter.year}</div>
+            </div>
+          )
+        }
+        {
+          frontmatter.role && (
+            <div class="meta-item">
+              <div class="meta-item__label">Experience</div>
+              <div class="meta-item__value">{frontmatter.role}</div>
+            </div>
+          )
+        }
+      </div>
+    </header>
+
+    {
+      frontmatter.featureImage && (
+        <img
+          src={frontmatter.featureImage}
+          alt={`${frontmatter.title} cover`}
+          class="work-single__cover"
+          loading="eager"
+        />
+      )
+    }
+
+    {
+      frontmatter.challenge && (
+        <section class="work-section">
+          <h3 class="work-section__title">The Challenge</h3>
+          <div class="post-layout__content">
+            <p>{frontmatter.challenge}</p>
+          </div>
+        </section>
+      )
+    }
+
+    {
+      frontmatter.result && (
+        <section class="work-section">
+          <h3 class="work-section__title">The Result</h3>
+          <div class="post-layout__content">
+            <p>{frontmatter.result}</p>
+          </div>
+        </section>
+      )
+    }
+
+    <div class="post-layout__content">
+      <slot />
+    </div>
+
+    {
+      frontmatter.tags && frontmatter.tags.length > 0 && (
+        <footer style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--color-line);">
+          <div class="tags-list">
+            {frontmatter.tags.map((tag: string) => (
+              <a href={`/tags/${tag}`} class="tag-item">
+                #{tag}
+              </a>
+            ))}
+          </div>
+        </footer>
+      )
+    }
+  </article>
+</BaseLayout>

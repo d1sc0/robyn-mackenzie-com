@@ -1,0 +1,35 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description?: string;
+    featureImage?: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+
+const trail = [
+  { label: frontmatter.title },
+];
+---
+
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  ogImage={frontmatter.featureImage}
+  trail={trail}
+>
+  <article class="page-layout">
+    <header style="margin-bottom: 2rem; border-bottom: 1px solid var(--color-line); padding-bottom: 1.5rem;">
+      <h1>{frontmatter.title}</h1>
+      {frontmatter.description && <p class="hero__lead">{frontmatter.description}</p>}
+    </header>
+
+    <div class="post-layout__content">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

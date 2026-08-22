@@ -1,0 +1,42 @@
+---
+import '../styles/work.css';
+
+interface Props {
+  title: string;
+  slug: string;
+  description: string;
+  client?: string;
+  year?: string;
+  role?: string;
+  featureImage?: string;
+}
+
+const { title, slug, description, client, year, role, featureImage } = Astro.props;
+---
+
+<a href={`/work/${slug}`} class="work-card">
+  {
+    featureImage && (
+      <div class="work-card__image-wrap">
+        <img src={featureImage} alt={`${title} preview`} class="work-card__image" loading="lazy" />
+      </div>
+    )
+  }
+  <div class="work-card__content">
+    <div class="work-card__meta">
+      {client && <span>{client}</span>}
+      {client && year && <span>&middot;</span>}
+      {year && <span>{year}</span>}
+    </div>
+    <h3 class="work-card__title">{title}</h3>
+    <p class="work-card__description">{description}</p>
+    {
+      role && (
+        <div class="work-card__footer">
+          <span class="badge">{role}</span>
+          <span class="badge badge--accent">View Project &rarr;</span>
+        </div>
+      )
+    }
+  </div>
+</a>

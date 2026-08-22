@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WorkCard from '../components/WorkCard.astro';
+import PostCard from '../components/PostCard.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { getCollection } from 'astro:content';
+import '../styles/home.css';
+
+const allWork = await getCollection('work');
+const featuredWork = allWork
+  .filter(w => w.data.featured !== false)
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+
+const allPosts = await getCollection('posts');
+const recentPosts = allPosts
+  .filter(p => !p.data.draft)
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
+  .slice(0, 3);
+---
+
+<BaseLayout title="Home">
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1 class="hero__title">Robyn<br />Mackenzie</h1>
+    
+    <p class="hero__lead">
+      Hello there &mdash; I'm a designer and user researcher driven by a belief that better services build a better world. Let's make it happen together!
+    </p>
+    
+    <p class="hero__bio">
+      I utilise visual design to make complex ideas clearer, enabling teams to understand research, map systems, and communicate solutions in a more relatable way. Grounded in empathy, accessibility, and public interest design.
+    </p>
+
+    <div class="hero__actions">
+      <a href="/work" class="btn btn--primary">View Selected Work &rarr;</a>
+      <a href="/about" class="btn btn--outline">About Me</a>
+      <a href="/contact" class="btn btn--outline">Get in touch</a>
+    </div>
+  </section>
+
+  <!-- Selected Work Section -->
+  <section class="section">
+    <div class="section__header">
+      <div>
+        <div class="section__label">01 // Portfolio</div>
+        <h2 class="section__title">Selected Work</h2>
+      </div>
+      <a href="/work" class="section__link">View All ({allWork.length}) &rarr;</a>
+    </div>
+
+    <div class="work-grid">
+      {
+        featuredWork.map(project => (
+          <WorkCard
+            title={project.data.title}
+            slug={project.id}
+            description={project.data.description}
+            client={project.data.client}
+            year={project.data.year}
+            role={project.data.role}
+            featureImage={project.data.featureImage}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Digital Garden / Recent Posts Section -->
+  <section class="section">
+    <div class="section__header">
+      <div>
+        <div class="section__label">02 // Digital Garden</div>
+        <h2 class="section__title">Recent Notes &amp; Thoughts</h2>
+      </div>
+      <a href="/posts" class="section__link">View All Notes &rarr;</a>
+    </div>
+
+    <div class="posts-list">
+      {
+        recentPosts.map(post => (
+          <PostCard
+            title={post.data.title}
+            slug={post.id}
+            pubDate={post.data.pubDate}
+            description={post.data.description}
+            tags={post.data.tags}
+            category={post.data.category}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Connect Section -->
+  <section class="section">
+    <div class="section__header">
+      <div>
+        <div class="section__label">03 // Connect</div>
+        <h2 class="section__title">Let's talk</h2>
+      </div>
+    </div>
+    
+    <p>
+      Interested in turning good ideas into great experiences? Whether it's service design, content strategy, or speculative research, ping me a message.
+    </p>
+
+    <SocialLinks />
+  </section>
+</BaseLayout>

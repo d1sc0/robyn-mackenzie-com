@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TagList from '../../components/TagList.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('posts');
+const allWork = await getCollection('work');
+
+const tagCountMap: Record<string, number> = {};
+
+allPosts.forEach(post => {
+  if (!post.data.draft) {
+    (post.data.tags || []).forEach(tag => {
+      tagCountMap[tag] = (tagCountMap[tag] || 0) + 1;
+    });
+  }
+});
+
+allWork.forEach(work => {
+  (work.data.tags || []).forEach(tag => {
+    tagCountMap[tag] = (tagCountMap[tag] || 0) + 1;
+  });
+});
+
+const sortedTags = Object.entries(tagCountMap)
+  .map(([name, count]) => ({ name, count }))
+  .sort((a, b) => b.count - a.count);
+
+const trail = [{ label: 'Tags' }];
+---
+
+<BaseLayout
+  title="All Topics & Tags"
+  description="Browse posts and case studies by topic on Robyn Mackenzie's digital garden."
+  trail={trail}
+>
+  <div style="margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-line);">
+    <span class="section__label">Taxonomy</span>
+    <h1>All Topics</h1>
+    <p class="hero__lead">
+      Explore all articles, notes, and case studies grouped by theme and discipline.
+    </p>
+  </div>
+
+  <TagList tags={sortedTags} />
+</BaseLayout>

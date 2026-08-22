@@ -1,0 +1,67 @@
+/* Playlist Widget Styles */
+
+.playlist-widget {
+  margin: 2rem 0;
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  background: var(--color-page-card);
+  overflow: hidden;
+}
+
+.playlist-widget__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-page);
+}
+
+.playlist-widget__title {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.playlist-widget__tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.playlist-widget__tab {
+  background: none;
+  border: 1px solid transparent;
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.playlist-widget__tab:hover {
+  color: var(--color-text);
+}
+
+.playlist-widget__tab.is-active {
+  background: var(--color-page-card);
+  border-color: var(--color-line);
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.playlist-widget__container {
+  padding: 1rem;
+}
+
+.playlist-widget__panel {
+  display: none;
+}
+
+.playlist-widget__panel.is-active {
+  display: block;
+}

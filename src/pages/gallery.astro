@@ -1,0 +1,259 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+import yaml from 'yaml';
+import '../styles/gallery.css';
+
+let galleries: any[] = [];
+try {
+  const yamlPath = path.resolve('src/content/galleries.yaml');
+  if (fs.existsSync(yamlPath)) {
+    const raw = fs.readFileSync(yamlPath, 'utf8');
+    const parsed = yaml.parse(raw);
+    galleries = parsed?.galleries || [];
+  }
+} catch (e) {
+  console.error('Failed to load galleries:', e);
+}
+
+// Flatten all images with unique global index for the lightbox
+interface GalleryImageItem {
+  src: string;
+  alt: string;
+  caption: string;
+  sectionTitle: string;
+  globalIndex: number;
+}
+
+let allImages: GalleryImageItem[] = [];
+let currentIndex = 0;
+
+galleries.forEach(section => {
+  (section.images || []).forEach((img: any) => {
+    allImages.push({
+      src: img.src.replace('../../', '/src/'),
+      alt: img.alt || section.title || 'Gallery image',
+      caption: img.caption || '',
+      sectionTitle: section.title || '',
+      globalIndex: currentIndex++,
+    });
+  });
+});
+
+const trail = [{ label: 'Gallery' }];
+---
+
+<BaseLayout
+  title="Visual Gallery"
+  description="Curated visual artifacts, prints, photographs, and process sketches by Robyn Mackenzie."
+  trail={trail}
+>
+  <div style="margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-line);">
+    <span class="section__label">Gallery</span>
+    <h1>Visual Gallery</h1>
+    <p class="hero__lead">
+      A visual space for lino-prints, publication spreads, identity artifacts, and fieldwork photography. Click any image to view details in the lightbox.
+    </p>
+  </div>
+
+  {
+    galleries.map(section => {
+      const sectionImages = allImages.filter(item => item.sectionTitle === section.title);
+      return (
+        <section style="margin-bottom: 3.5rem;">
+          <h2 class="gallery-section-title">{section.title}</h2>
+          {section.description && (
+            <p class="gallery-section-desc">{section.description}</p>
+          )}
+
+          <div class="gallery-grid">
+            {sectionImages.map(item => (
+              <button
+                type="button"
+                class="gallery-item"
+                data-gallery-trigger
+                data-index={item.globalIndex}
+                data-src={item.src}
+                data-alt={item.alt}
+                data-caption={item.caption}
+                data-title={item.sectionTitle}
+                aria-label={`Open image: ${item.alt || item.sectionTitle}`}
+              >
+                <img
+                  src={item.src}
+                  alt={item.alt || ''}
+                  class="gallery-item__image"
+                  loading="lazy"
+                />
+                <div class="gallery-item__overlay">
+                  <div class="gallery-item__icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <polyline points="9 21 3 21 3 15"></polyline>
+                      <line x1="21" y1="3" x2="14" y2="10"></line>
+                      <line x1="3" y1="21" x2="10" y2="14"></line>
+                    </svg>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </section>
+      );
+    })
+  }
+
+  <!-- Interactive Lightbox Modal -->
+  <div
+    id="gallery-lightbox"
+    class="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image lightbox"
+    tabindex="-1"
+  >
+    <div class="lightbox__backdrop" data-lightbox-close></div>
+
+    <button
+      type="button"
+      class="lightbox__close"
+      data-lightbox-close
+      aria-label="Close lightbox (Esc)"
+    >
+      &times;
+    </button>
+
+    <button
+      type="button"
+      class="lightbox__nav-btn lightbox__nav-btn--prev"
+      id="lightbox-prev"
+      aria-label="Previous image (Left arrow)"
+    >
+      &#8592;
+    </button>
+
+    <button
+      type="button"
+      class="lightbox__nav-btn lightbox__nav-btn--next"
+      id="lightbox-next"
+      aria-label="Next image (Right arrow)"
+    >
+      &#8594;
+    </button>
+
+    <div class="lightbox__dialog">
+      <figure class="lightbox__figure">
+        <img
+          id="lightbox-img"
+          class="lightbox__image"
+          src=""
+          alt=""
+        />
+        <div class="lightbox__caption-overlay">
+          <h3 id="lightbox-title" class="lightbox__caption-title"></h3>
+          <p id="lightbox-caption" class="lightbox__caption-text"></p>
+          <span id="lightbox-counter" class="lightbox__counter"></span>
+        </div>
+      </figure>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Lightbox Client Script
+  document.addEventListener('DOMContentLoaded', () => {
+    const triggers = Array.from(document.querySelectorAll('[data-gallery-trigger]')) as HTMLButtonElement[];
+    const lightbox = document.getElementById('gallery-lightbox') as HTMLElement | null;
+    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
+    const lightboxTitle = document.getElementById('lightbox-title') as HTMLElement | null;
+    const lightboxCaption = document.getElementById('lightbox-caption') as HTMLElement | null;
+    const lightboxCounter = document.getElementById('lightbox-counter') as HTMLElement | null;
+    const prevBtn = document.getElementById('lightbox-prev') as HTMLButtonElement | null;
+    const nextBtn = document.getElementById('lightbox-next') as HTMLButtonElement | null;
+    const closeElements = document.querySelectorAll('[data-lightbox-close]');
+
+    if (!lightbox || !lightboxImg || triggers.length === 0) return;
+
+    let currentIndex = 0;
+    const totalImages = triggers.length;
+
+    function showImage(index: number) {
+      if (index < 0) index = totalImages - 1;
+      if (index >= totalImages) index = 0;
+      currentIndex = index;
+
+      const trigger = triggers[currentIndex];
+      if (!trigger || !lightboxImg) return;
+
+      const src = trigger.dataset.src || '';
+      const alt = trigger.dataset.alt || '';
+      const caption = trigger.dataset.caption || '';
+      const title = trigger.dataset.title || '';
+
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+
+      if (lightboxTitle) lightboxTitle.textContent = title;
+      if (lightboxCaption) {
+        lightboxCaption.textContent = caption;
+        lightboxCaption.style.display = caption ? 'block' : 'none';
+      }
+      if (lightboxCounter) {
+        lightboxCounter.textContent = `${currentIndex + 1} / ${totalImages}`;
+      }
+    }
+
+    function openLightbox(index: number) {
+      showImage(index);
+      lightbox?.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      lightbox?.focus();
+    }
+
+    function closeLightbox() {
+      lightbox?.classList.remove('is-open');
+      document.body.style.overflow = '';
+      if (lightboxImg) lightboxImg.src = '';
+      const lastTrigger = triggers[currentIndex];
+      lastTrigger?.focus();
+    }
+
+    // Attach click triggers
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const index = parseInt(trigger.dataset.index || '0', 10);
+        openLightbox(index);
+      });
+    });
+
+    // Close on backdrop or close button
+    closeElements.forEach(el => {
+      el.addEventListener('click', closeLightbox);
+    });
+
+    // Navigation buttons
+    prevBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showImage(currentIndex - 1);
+    });
+
+    nextBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showImage(currentIndex + 1);
+    });
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (!lightbox?.classList.contains('is-open')) return;
+
+      if (e.key === 'Escape') {
+        closeLightbox();
+      } else if (e.key === 'ArrowLeft') {
+        showImage(currentIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        showImage(currentIndex + 1);
+      }
+    });
+  });
+</script>

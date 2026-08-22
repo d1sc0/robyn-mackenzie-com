@@ -1,0 +1,237 @@
+/* Navigation Styles */
+
+header {
+  position: relative;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+}
+
+nav.main-nav {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'brand burger'
+    'links links';
+  padding: 0.5rem 0;
+  align-items: center;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.brand {
+  grid-area: brand;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand .site-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.brand .site-title a {
+  color: var(--color-text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--color-text);
+  color: var(--color-page);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+/* Burger Button */
+.burger {
+  grid-area: burger;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.burger-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  color: var(--color-text);
+  outline: none;
+}
+
+/* Hamburger SVG Line Animation */
+.line {
+  fill: none;
+  stroke: var(--color-text);
+  stroke-width: 5;
+  stroke-linecap: round;
+  transition:
+    stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+    stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line1,
+.line3 {
+  stroke-dasharray: 60 207;
+  stroke-width: 5;
+}
+
+.line2 {
+  stroke-dasharray: 60 60;
+  stroke-width: 5;
+}
+
+.burger-button.opened .line1,
+.burger-button.opened .line3 {
+  stroke-dasharray: 90 207;
+  stroke-dashoffset: -134;
+  stroke-width: 6;
+}
+
+.burger-button.opened .line2 {
+  stroke-dasharray: 1 60;
+  stroke-dashoffset: -30;
+  stroke-width: 6;
+}
+
+/* Mobile Links List (Collapsible Grid Area) */
+.links-list {
+  grid-area: links;
+  display: none;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1.25rem;
+  background-color: var(--color-page-card);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.links-list.is-active {
+  display: block;
+}
+
+.nav-lists-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.main-links,
+.icon-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.main-links {
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.main-links li a {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  display: inline-block;
+  transition: color 0.15s ease;
+}
+
+.main-links li a:hover,
+.main-links li a.is-active {
+  color: var(--color-accent);
+}
+
+.icon-links {
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  color: var(--color-text);
+  border: 1px solid var(--color-line);
+  background: var(--color-page);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.icon-link:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Desktop View (768px+) */
+@media (min-width: 768px) {
+  nav.main-nav {
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 'brand links';
+    padding: 0.75rem 0;
+  }
+
+  .burger {
+    display: none;
+  }
+
+  .links-list {
+    display: block !important;
+    grid-area: links;
+    margin-top: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .nav-lists-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.75rem;
+  }
+
+  .main-links {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .main-links li a {
+    font-size: 0.95rem;
+  }
+
+  .icon-links {
+    padding-top: 0;
+    border-top: none;
+  }
+}

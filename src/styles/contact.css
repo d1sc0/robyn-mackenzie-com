@@ -1,0 +1,51 @@
+/* Contact Page Styles */
+
+.contact-hero {
+  padding: 2rem 0 3rem 0;
+}
+
+.contact-card {
+  background: var(--color-page-card);
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  padding: 2.5rem;
+  margin: 2rem 0;
+  text-align: center;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+}
+
+.contact-email {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  text-decoration: none;
+  display: inline-block;
+  margin: 1.5rem 0;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  background: var(--color-accent-light);
+  border: 1px solid var(--color-accent);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+@media (min-width: 768px) {
+  .contact-email {
+    font-size: 2rem;
+  }
+}
+
+.contact-email:hover {
+  transform: translateY(-2px);
+}
+
+.availability-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 8px;
+  background: var(--color-page-card);
+  border: 1px solid var(--color-line);
+  margin-top: 2rem;
+}

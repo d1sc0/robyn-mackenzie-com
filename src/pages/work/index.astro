@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkCard from '../../components/WorkCard.astro';
+import { getCollection } from 'astro:content';
+import '../../styles/work.css';
+
+const allWork = await getCollection('work');
+const sortedWork = allWork.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+
+const trail = [{ label: 'Work' }];
+---
+
+<BaseLayout
+  title="Work & Portfolio"
+  description="Selected design research, service design, and visual communication projects by Robyn Mackenzie."
+  trail={trail}
+>
+  <div style="margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-line);">
+    <span class="section__label">Portfolio</span>
+    <h1>Selected Work</h1>
+    <p class="hero__lead">
+      A collection of service design projects, speculative civic campaigns, and research initiatives designed for real human needs.
+    </p>
+  </div>
+
+  <div class="work-grid">
+    {
+      sortedWork.map(project => (
+        <WorkCard
+          title={project.data.title}
+          slug={project.id}
+          description={project.data.description}
+          client={project.data.client}
+          year={project.data.year}
+          role={project.data.role}
+          featureImage={project.data.featureImage}
+        />
+      ))
+    }
+  </div>
+</BaseLayout>
