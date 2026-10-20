@@ -11,11 +11,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.1.0",
-    "@astrojs/rss": "^4.0.11",
-    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/mdx": "^8.1.0",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
     "@sveltia/cms": "^0.152.5",
-    "astro": "^5.4.0",
+    "astro": "^7.4.1",
     "astro-icon": "^1.1.5",
     "astro-seo": "^1.0.1",
     "fs-extra": "^11.3.0",
